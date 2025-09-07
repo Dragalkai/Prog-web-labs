@@ -1,0 +1,23 @@
+.app {
+  padding: 24px;
+  min-height: 100dvh;
+  transition: background .2s, color .2s;
+  font-family: system-ui, Arial, sans-serif;
+}
+
+.app.light {
+  background: #f7f7fb;
+  color: #1e1e22;
+}
+
+.app.dark {
+  background: #121214;
+  color: #e9e9ef;
+}
+
+button { padding: .5rem .9rem; border: 1px solid #ccc; border-radius: 8px; cursor: pointer; }
+button:hover { filter: brightness(1.05); }
+
+.color-box {
+  transition: background-color .2s ease;
+}

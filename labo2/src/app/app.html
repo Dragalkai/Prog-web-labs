@@ -1,7 +1,138 @@
-<div class="container">
+<div class="app" [class.light]="theme==='light'" [class.dark]="theme==='dark'">
+  <button (click)="toggleTheme()">Changer le thème</button>
+
+  <h2>Affichage de la liste</h2>
   <ul>
-        <li *ngFor="let p in loveList">{{p}}</li>
-        <li></li>
-        <li></li>
+    <li *ngFor="let item of loveList">{{ item }}</li>
   </ul>
+
+  <p>
+  J'aime les
+  <strong *ngIf="userAge >= 18; else autreChose">cigarettes</strong>.
+  </p>
+  <ng-template #autreChose>
+    <strong>LEGO Star Wars</strong>
+  </ng-template>
+
+  <h2>Compte à rebours</h2>
+  <button (click)="countdown()" [disabled]="isExploded">Compte à rebours</button>
+  <span style="margin-left:8px; font-weight:600;">({{ clicksLeft }})</span>
+  <span *ngIf="!isExploded" style="margin-left:8px; font-size:24px;">💣</span>
+  <span *ngIf="isExploded" style="margin-left:8px; font-size:24px;">💥</span>
+
+  <h2>6) Saluer avec le nom</h2>
+  <input
+    type="text"
+    placeholder="Votre nom"
+    [(ngModel)]="userName"
+    style="margin-right:8px; padding:.4rem;"
+  />
+
+  <button (click)="sayHello()" [disabled]="!userName.trim()">
+    Dire salut
+  </button>
+
+  <p style="opacity:.7;margin-top:6px;">
+    Prévisualisation : {{ userName || '—' }}
+  </p>
+
+  <h2>7) Couleur de fond via &lt;select&gt;</h2>
+  <label>Couleur :
+    <select [(ngModel)]="bgColor" style="margin-left:6px;">
+      <option [value]="'lightcyan'">Bleu (lightcyan)</option>
+      <option [value]="'mistyrose'">Rose (mistyrose)</option>
+      <option [value]="'lightyellow'">Jaune (lightyellow)</option>
+    </select>
+  </label>
+
+  <div
+    class="color-box"
+    [style.backgroundColor]="bgColor"
+    style="margin-top:12px; padding:24px; border-radius:12px; border:1px solid #ccc;"
+  >
+    Fond dynamique ({{ bgColor }})
+  </div>
+
+  <h2>8) Formulaire VideoGame</h2>
+  <div class="form-grid" style="display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+    <label>Titre
+      <input type="text" [(ngModel)]="f_title">
+    </label>
+
+    <label>Année
+      <input type="number" [(ngModel)]="f_year">
+    </label>
+
+    <label style="display:flex;align-items:center;gap:8px;">
+      <input type="checkbox" [(ngModel)]="f_isMultiplayer">
+      Multijoueur
+    </label>
+
+    <div>
+      <div style="font-weight:600;margin-bottom:6px;">Plateforme :</div>
+      <label style="margin-right:12px;">
+        <input type="radio" name="platform" [(ngModel)]="f_platform" value="pc">
+        PC
+      </label>
+      <label style="margin-right:12px;">
+        <input type="radio" name="platform" [(ngModel)]="f_platform" value="console">
+        Console
+      </label>
+      <label>
+        <input type="radio" name="platform" [(ngModel)]="f_platform" value="mobile">
+        Mobile
+      </label>
+    </div>
+
+    <label>Genres (séparés par des virgules)
+      <input type="text" placeholder="action,rpg,solo" [(ngModel)]="f_genresCSV">
+    </label>
+
+    <div>
+      <button (click)="addGame()">Ajouter</button>
+    </div>
+  </div>
+
+  <h2>9) Nouvelle liste avec &#64;for / &#64;empty</h2>
+
+  <div style="margin:8px 0;">
+    <button (click)="clearGames()">Vider la liste</button>
+    <button (click)="seedGames()" style="margin-left:8px;">Réinitialiser des jeux</button>
+  </div>
+
+  <ul>
+    @for (g of videoGames; track g.title) {
+      <li style="margin-bottom:10px;">
+        <strong>{{ g.title }}</strong> ({{ g.year }}) – {{ g.platform }}
+        @if (g.isMultiplayer) { <em> [multi]</em> }
+
+        <ul>
+          @for (gen of g.genres; track gen) {
+            <li>{{ gen }}</li>
+          }
+        </ul>
+      </li>
+    } @empty {
+      <li>Aucun jeu pour l’instant.</li>
+    }
+  </ul>
+
+  <h2>10) Message selon le thème (&#64;if / &#64;else)</h2>
+  <p>
+    @if (theme === 'light') {
+      <span>aaaaaaaaaaaaaaa mes yeux.</span>
+    } @else {
+      <span>C'est bien sombre ici.</span>
+    }
+  </p>
+
+  <h2>11) Message selon la quantité (&#64;switch)</h2>
+  <p>
+    @switch (videoGames.length) {
+      @case (1) { <span>Un jeu ? C'est peu 🤏</span> }
+      @case (2) { <span>Deux jeux ? Ça occupe 🙄</span> }
+      @case (3) { <span>Tu dois sûrement faire partie du 1% ! 💰</span> }
+      @default { <span>Aucun ou trop de jeux 🤔</span> }
+    }
+  </p>
 </div>

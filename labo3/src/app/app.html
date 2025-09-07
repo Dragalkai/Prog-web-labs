@@ -1,0 +1,82 @@
+<!-- src/app/app.component.html -->
+<div class="wrap">
+  <h1>Laboratoire 3 — Requêtes HTTP (Last.fm)</h1>
+
+  <!-- ================= ALBUM.getInfo (tes notes) ================= -->
+  <section class="card">
+    <h2>Album.getInfo (extraction simple + ["#text"] + liste)</h2>
+
+    <div class="row">
+      Artiste :
+      <input type="text" [(ngModel)]="inputArtist" placeholder="Ex: Cher">
+    </div>
+    <div class="row">
+      Album :
+      <input type="text" [(ngModel)]="inputAlbum" placeholder="Ex: Believe">
+    </div>
+    <button (click)="getAlbumInfo()">Rechercher l’album</button>
+
+    <p *ngIf="loadingAlbum">Chargement…</p>
+    <p *ngIf="errorMessage" class="error">{{errorMessage}}</p>
+
+    <div *ngIf="!errorMessage && artistName">
+      <p>Artiste : <strong>{{artistName}}</strong></p>
+      <p>Album : <strong>{{albumName}}</strong></p>
+      <img *ngIf="imageUrl" [src]="imageUrl" alt="Pochette de l’album {{albumName}}">
+
+      <h3>Chansons</h3>
+      <ul>
+        <li *ngFor="let s of songs">
+          {{s.name}} — {{s.duration}} s
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= artist.getSimilar ================= -->
+  <section class="card">
+    <h2>Artistes similaires (artist.getSimilar)</h2>
+
+    <div class="row">
+      Artiste :
+      <input type="text" [(ngModel)]="artistInput" placeholder="Ex: Daft Punk">
+    </div>
+    <button (click)="searchSimilarArtists()">Chercher</button>
+
+    <p *ngIf="loadingSimilar">Chargement…</p>
+    <p *ngIf="errorSimilar" class="error">{{errorSimilar}}</p>
+
+    <ul *ngIf="!errorSimilar && similarArtists.length > 0">
+      <li *ngFor="let a of similarArtists">{{ a }}</li>
+    </ul>
+
+    <p *ngIf="!loadingSimilar && !errorSimilar && similarArtists.length === 0" class="muted">
+      Aucun résultat pour cette recherche.
+    </p>
+  </section>
+
+  <!-- ================= tag.getTopTracks ================= -->
+  <section class="card">
+    <h2>Meilleures chansons d’un genre (tag.getTopTracks)</h2>
+
+    <div class="row">
+      Genre (tag) :
+      <input type="text" [(ngModel)]="tagInput" placeholder="Ex: rock, pop, electronic…">
+    </div>
+    <button (click)="searchTopTracks()">Chercher</button>
+
+    <p *ngIf="loadingTop">Chargement…</p>
+    <p *ngIf="errorTop" class="error">{{errorTop}}</p>
+
+    <ol *ngIf="!errorTop && topSongs.length > 0">
+      <li *ngFor="let t of topSongs">
+        <strong>{{ t.title }}</strong> — {{ t.artist }}
+        &nbsp;·&nbsp;<a [href]="t.url" target="_blank" rel="noopener">Écouter</a>
+      </li>
+    </ol>
+
+    <p *ngIf="!loadingTop && !errorTop && topSongs.length === 0" class="muted">
+      Aucune chanson trouvée pour ce genre.
+    </p>
+  </section>
+</div>

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "labo2": {
+    "labo3": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -56,10 +56,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "labo2:build:production"
+              "buildTarget": "labo3:build:production"
             },
             "development": {
-              "buildTarget": "labo2:build:development"
+              "buildTarget": "labo3:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -88,8 +88,5 @@
         }
       }
     }
-  },
-  "cli": {
-    "analytics": false
   }
 }

@@ -1,20 +1,51 @@
-.container { max-width: 900px; margin: 24px auto; padding: 0 12px; font-family: system-ui, sans-serif; }
-h1 { margin-bottom: 12px; }
-.search-bar { display: flex; gap: 8px; margin-bottom: 16px; }
-.search-bar input { flex: 1; padding: 8px; font-size: 16px; }
-.search-bar button { padding: 8px 12px; }
-.error { color: #b00020; margin: 8px 0 16px; }
-
-.albums-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 12px;
-  margin-bottom: 16px;
+:root {
+  --border:#ddd;
+  --bg:#f5f5f5;
 }
-.album-card { border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fafafa; }
-.album-card img { width: 100%; height: 160px; object-fit: cover; cursor: pointer; display: block; }
-.album-card .meta { padding: 8px; }
-.album-card .artist { color: #555; }
 
-ul { padding-left: 18px; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+
+.topbar {
+  position: sticky; top: 0; z-index: 1;
+  background: white; padding: 8px; border-bottom: 1px solid var(--border);
+  display: flex; gap: 8px;
+}
+.topbar input { flex: 1; padding: 8px; font-size: 14px; }
+.topbar button { padding: 8px 12px; }
+
+.error { color: #b00020; margin: 8px; }
+
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px; padding: 12px;
+}
+.left { border-right: 1px solid var(--border); padding-right: 16px; }
+.right { padding-left: 8px; }
+h2 { margin: 8px 0 12px; }
+
+.albums {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+.album {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 8px; border-radius: 6px;
+  cursor: pointer; transition: transform .05s ease-in-out;
+}
+.album:hover { transform: translateY(-2px); }
+.album img {
+  width: 100%; height: 180px; object-fit: cover; display: block; margin-bottom: 6px;
+}
+.album .title { font-weight: 700; }
+
+ul { margin: 0; padding-left: 20px; }
 .time { color: #666; }
+.hint { color: #666; }
+@media (max-width: 900px) {
+  .columns { grid-template-columns: 1fr; }
+  .left { border-right: none; padding-right: 0; }
+}

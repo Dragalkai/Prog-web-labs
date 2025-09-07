@@ -1,38 +1,42 @@
-<div class="container">
-  <h1>Dernière musique FM — TP1</h1>
+<div class="topbar">
+  <input
+    [(ngModel)]="artistQuery"
+    (keyup.enter)="searchAlbums()"
+    placeholder="hans zimmer, daft punk, etc." />
+  <button (click)="searchAlbums()">Chercher les albums</button>
+</div>
 
-  <div class="search-bar">
-    <input
-      type="text"
-      [(ngModel)]="artistQuery"
-      placeholder="Entrez un artiste (ex: Daft Punk)"
-      (keyup.enter)="searchAlbums()" />
-    <button (click)="searchAlbums()">Rechercher albums</button>
-  </div>
+<p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
 
-  <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+<div class="columns">
+  <section class="left">
+    <h2 *ngIf="artistTitle">Albums de {{ artistTitle }}</h2>
+    <p *ngIf="loadingAlbums">Chargement des albums…</p>
 
-  <h2>Albums</h2>
-  <p *ngIf="loadingAlbums">Chargement des albums…</p>
-  <div class="albums-grid" *ngIf="!loadingAlbums && albums.length">
-    <div class="album-card" *ngFor="let a of albums">
-      <img
-        [src]="a.imageUrl || 'https://placehold.co/300x300?text=No+Cover'"
-        [alt]="a.title"
-        (click)="loadTracksForAlbum(a)" />
-      <div class="meta">
-        <strong>{{ a.title }}</strong>
-        <div class="artist">{{ a.artist }}</div>
-        <small>(Clique la pochette pour voir les chansons)</small>
+    <div class="albums" *ngIf="!loadingAlbums && albums.length">
+      <div
+        class="album"
+        *ngFor="let a of albums"
+        (click)="loadTracksForAlbum(a)"
+        title="Voir les chansons">
+        <img [src]="a.imageUrl || 'https://placehold.co/180x180?text=No+Cover'" [alt]="a.title" />
+        <div class="title">{{ a.title }}</div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <h2>Chansons</h2>
-  <p *ngIf="loadingTracks">Chargement des chansons…</p>
-  <ul *ngIf="!loadingTracks && tracks.length">
-    <li *ngFor="let t of tracks">
-      • {{ t.name }} <span class="time">({{ toMinSec(t.duration) }})</span>
-    </li>
-  </ul>
+  <section class="right">
+    <h2 *ngIf="selectedAlbumName">
+      Chansons de l'album {{ selectedAlbumName }}
+    </h2>
+    <h2 *ngIf="!selectedAlbumName">Chansons</h2>
+
+    <p *ngIf="loadingTracks">Chargement des chansons…</p>
+    <ul *ngIf="!loadingTracks && tracks.length">
+      <li *ngFor="let t of tracks">• {{ t.name }} <span class="time">({{ toMinSec(t.duration) }})</span></li>
+    </ul>
+    <p class="hint" *ngIf="!loadingTracks && !tracks.length">
+      Clique une pochette d’album pour afficher les chansons.
+    </p>
+  </section>
 </div>

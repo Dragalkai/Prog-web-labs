@@ -1,0 +1,20 @@
+.container { max-width: 900px; margin: 24px auto; padding: 0 12px; font-family: system-ui, sans-serif; }
+h1 { margin-bottom: 12px; }
+.search-bar { display: flex; gap: 8px; margin-bottom: 16px; }
+.search-bar input { flex: 1; padding: 8px; font-size: 16px; }
+.search-bar button { padding: 8px 12px; }
+.error { color: #b00020; margin: 8px 0 16px; }
+
+.albums-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.album-card { border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fafafa; }
+.album-card img { width: 100%; height: 160px; object-fit: cover; cursor: pointer; display: block; }
+.album-card .meta { padding: 8px; }
+.album-card .artist { color: #555; }
+
+ul { padding-left: 18px; }
+.time { color: #666; }
